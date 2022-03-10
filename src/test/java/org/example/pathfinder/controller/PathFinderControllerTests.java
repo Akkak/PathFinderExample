@@ -18,10 +18,18 @@ public class PathFinderControllerTests {
   @Autowired
   ObjectMapper mapper;
 
+  //hardcoded sanity test if request works
   @Test
-  public void testIfItWorks() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/path-finder"))
+  public void testIfFindsPath() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/path-finder/simple?path=testVisualization1.txt&finishX=1&finishY=2"))
       .andExpect(status().isOk())
-      .andExpect(jsonPath("$.value", Matchers.is("It works!")));
+      .andExpect(jsonPath("$.path", Matchers.is("(0,0) -> (1,0) -> (2,1) -> (1,2)")));
+  }
+
+  //hardcoded sanity test for bad request data
+  @Test
+  public void testIfThrowsException() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/path-finder/simple?path=testVisualization1.txt&finishX=1&finishY=99"))
+      .andExpect(status().isInternalServerError());
   }
 }

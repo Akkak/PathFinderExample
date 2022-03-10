@@ -13,6 +13,7 @@ import java.io.IOException;
 @SpringBootTest
 public class SimplePathFinderTest {
 
+  //checks if found path actually exists and connects start with finish
   @Test
   public void TestCalculatingPath() throws IOException {
     Graph graph = SimpleVisualGraphLoader.loadSimpleVisualizedGraph("testVisualization1.txt");
