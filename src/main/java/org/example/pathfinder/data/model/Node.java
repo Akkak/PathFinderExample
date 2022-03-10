@@ -6,15 +6,19 @@ import java.util.List;
 public class Node {
   Position position;
   List<Node> neighbours;
+  Node previous;
+  int cost;
 
   public Node(Position position){
     this.position = position;
     neighbours = new LinkedList<>();
+    this.cost = Integer.MAX_VALUE;
   }
 
   public Node(Position position, List<Node> neighbours){
     this.position = position;
     this.neighbours = neighbours;
+    this.cost = Integer.MAX_VALUE;
   }
 
   public Position getPosition() {
@@ -39,6 +43,22 @@ public class Node {
       return true;
     }
     return false;
+  }
+
+  public Node getPrevious() {
+    return previous;
+  }
+
+  public void setPrevious(Node previous) {
+    this.previous = previous;
+  }
+
+  public int getCost() {
+    return cost;
+  }
+
+  public void setCost(int cost) {
+    this.cost = cost;
   }
 
   public int getX() {
