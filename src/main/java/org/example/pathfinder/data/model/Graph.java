@@ -16,4 +16,12 @@ public class Graph {
   public void setGraphMap(Map<Position, Node> graphMap) {
     this.graphMap = graphMap;
   }
+
+  public Node getNode(int x, int y){
+    return graphMap.get(new Position(x,y));
+  }
+
+  public Node getNode(Position pos){
+    return graphMap.get(pos);
+  }
 }
