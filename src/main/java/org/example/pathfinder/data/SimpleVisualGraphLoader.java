@@ -15,25 +15,33 @@ import java.util.Map;
 public class SimpleVisualGraphLoader {
 
   public static Graph loadSimpleVisualizedGraph(String path) throws IOException {
-    File visualGraphFile = getGraphFile(path);
-    BufferedReader reader = new BufferedReader(new FileReader(visualGraphFile));
     Map<Position, Node> points = new HashMap<>();
-    int y = 0;
-    //in theory, shouldn't do that this way, but in this case this should be ok
-    String line = reader.readLine();
-    while(line != null){
-      String[] letters = line.split(" ");
-      for (int x = 0; x < letters.length; x++)
-        if (letters[x].equals("_")){
-          Node temp = new Node(new Position(x, y));
-          points.put(temp.getPosition(), temp);
-        }
-      line = reader.readLine();
-      y++;
+    BufferedReader reader = null;
+    try {
+      File visualGraphFile = getGraphFile(path);
+      reader = new BufferedReader(new FileReader(visualGraphFile));
+      int y = 0;
+      //in theory, shouldn't do that this way, but in this case this should be ok
+      String line = reader.readLine();
+      while (line != null) {
+        String[] letters = line.split(" ");
+        for (int x = 0; x < letters.length; x++)
+          if (letters[x].equals("_")) {
+            Node temp = new Node(new Position(x, y));
+            points.put(temp.getPosition(), temp);
+          }
+        line = reader.readLine();
+        y++;
+      }
+    } catch (Exception e) {
+      throw e;
+    } finally {
+      if (reader != null)
+        reader.close();
     }
     points.values().forEach(point -> {
-      for(int i = -1; i <= 1; i++){
-        for(int j = -1; j <= 1; j++){
+      for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
           point.addNeighbour(points.get(new Position(point.getX() + i, point.getY() + j)));
         }
       }
